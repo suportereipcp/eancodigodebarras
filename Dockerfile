@@ -1,26 +1,32 @@
-# Usa uma imagem leve do Node.js
 FROM node:18-alpine
 
-# Define a pasta de trabalho
 WORKDIR /app
 
-# Instala o gerenciador de pacotes PNPM (que você usa no projeto)
+# Instala o PNPM
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copia os arquivos de dependências primeiro (para ser mais rápido)
+# Copia arquivos de dependência
 COPY package.json pnpm-lock.yaml* ./
 
-# Instala as dependências do projeto
+# Instala dependências
 RUN pnpm install
 
-# Copia todo o resto do código para dentro da imagem
+# Copia o código
 COPY . .
 
-# Constrói o site (Build)
+# --- PARTE CRUCIAL (As chaves entram aqui) ---
+# 1. ARG: Captura o valor enviado pelo deploy.yml
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+# 2. ENV: Grava no ambiente para o Next.js ler
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+# ---------------------------------------------
+
+# Constrói o site (agora com as chaves disponíveis)
 RUN pnpm run build
 
-# Expõe a porta 3000 (padrão do Next.js)
 EXPOSE 3000
 
-# Comando para iniciar o site
 CMD ["pnpm", "start"]
