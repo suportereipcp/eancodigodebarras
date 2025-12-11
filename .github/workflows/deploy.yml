@@ -23,11 +23,15 @@ jobs:
           context: .
           push: true
           tags: suportereipcp/eancodigodebarras:latest
+          # AQUI: Injetamos as chaves na construção
+          build-args: |
+            NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+            NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
   trigger-easypanel:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Avisar Easypanel
-        # ATENÇÃO: Troque o link abaixo pelo Webhook que você pega no Easypanel
+        # MANTENHA O SEU LINK DE WEBHOOK AQUI ABAIXO:
         run: curl -X POST "http://177.200.78.209:3000/api/deploy/7b0486e341dfb75725b1db464576e89c989ce01e4a5e7d16"
