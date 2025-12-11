@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     // First, let's check if the users table exists and has data
     const { data: users, error: queryError } = await supabase
-      .from("users")
+      .from("eancodigodebarras_users")
       .select("*")
       .eq("username", username)
       .eq("password", password)

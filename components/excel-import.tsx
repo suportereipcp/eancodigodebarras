@@ -119,7 +119,7 @@ export function ExcelImport() {
         const batch = validProducts.slice(i, i + batchSize)
 
         try {
-          const { error } = await supabase.from("produtos").upsert(batch, {
+          const { error } = await supabase.from("eancodigodebarras_produtos").upsert(batch, {
             onConflict: "sku",
             ignoreDuplicates: false,
           })

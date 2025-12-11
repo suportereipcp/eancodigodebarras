@@ -46,7 +46,7 @@ export function AddProduct() {
     setError(null)
 
     try {
-      const { error: insertError } = await supabase.from("produtos").insert([
+      const { error: insertError } = await supabase.from("eancodigodebarras_produtos").insert([
         {
           sku: formData.sku.trim(),
           descricao: formData.descricao.trim(),

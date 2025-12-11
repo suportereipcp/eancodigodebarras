@@ -39,7 +39,7 @@ export function ProductSearch() {
 
     try {
       const { data, error } = await supabase
-        .from("produtos")
+        .from("eancodigodebarras_produtos")
         .select("*")
         .or(`sku.ilike.%${term}%,descricao.ilike.%${term}%,codigo_barras.ilike.%${term}%`)
         .order("sku")

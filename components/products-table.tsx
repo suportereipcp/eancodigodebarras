@@ -115,7 +115,7 @@ export function ProductsTable() {
       try {
         if (page === 0) setSearching(true)
 
-        let query = supabase.from("produtos").select("*", { count: "exact" }).order("sku", { ascending: true })
+        let query = supabase.from("eancodigodebarras_produtos").select("*", { count: "exact" }).order("sku", { ascending: true })
 
         if (searchQuery.trim()) {
           query = query.ilike("sku", `%${searchQuery.trim()}%`)
@@ -218,7 +218,7 @@ export function ProductsTable() {
     try {
       setSaving(true)
       const { error } = await supabase
-        .from("produtos")
+        .from("eancodigodebarras_produtos")
         .update({
           descricao: editForm.descricao.trim(),
           codigo_barras: editForm.codigo_barras.trim(),
@@ -254,7 +254,7 @@ export function ProductsTable() {
     async (sku: string) => {
       try {
         setDeleting(sku)
-        const { error } = await supabase.from("produtos").delete().eq("sku", sku)
+        const { error } = await supabase.from("eancodigodebarras_produtos").delete().eq("sku", sku)
 
         if (error) throw error
 

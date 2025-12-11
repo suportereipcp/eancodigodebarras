@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
     // Check if admin user already exists
-    const { data: existingUser } = await supabase.from("users").select("username").eq("username", "admin").single()
+    const { data: existingUser } = await supabase.from("eancodigodebarras_users").select("username").eq("username", "admin").single()
 
     if (existingUser) {
       return NextResponse.json({ message: "Admin user already exists" })
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // Create admin user
     const { data, error } = await supabase
-      .from("users")
+      .from("eancodigodebarras_users")
       .insert([
         {
           username: "admin",

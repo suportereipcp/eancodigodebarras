@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
 
     // Check if users table exists and get all users
-    const { data: users, error } = await supabase.from("users").select("*")
+    const { data: users, error } = await supabase.from("eancodigodebarras_users").select("*")
 
     if (error) {
       console.error("Database error:", error)
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     // Create admin user
     const { data, error } = await supabase
-      .from("users")
+      .from("eancodigodebarras_users")
       .upsert({
         username: "admin",
         password: "admin2025",
